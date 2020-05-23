@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript"  >
+        var str="no做no死,你能你can，不能no比比";
+        var reg=/\b[a-z]+\b/ig;
+        str=str.replace(reg,function(con){
+            return ' '+con+' ';
+        }).trim()// 取出前后多余空格
+        console.log(str);
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        (
+            function(){
+                function myindexOf(T){
+                let reg=new RegExp(T);
+                let res=reg.exec(this);
+                return res==null?-1:res.index;
+                }
+                String.prototype.myindexOf=myindexOf;
+            }
+        )();
+        let S='zhufengpeiixun',
+            T='peia';
+        console.log(S.myindexOf(T));
+    </script>
+</body>
+</html>

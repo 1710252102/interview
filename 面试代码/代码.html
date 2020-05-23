@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+    function SuperType(name){
+        this.name = name;
+        this.colors = ["red", "blue", "green"];
+    }
+    SuperType.prototype.sayName = function(){
+        alert(this.name);
+    }
+
+    function SubType(name, age){
+        SuperType.call(this, name);　　//第二次调用SuperType()
+        
+        this.age = age;
+    }
+    SubType.prototype = new SuperType();　　//第一次调用SuperType()
+    SubType.prototype.sayAge = function(){
+        alert(this.age);
+    }
+    const EventUtils={
+        //添加事件
+        addEvent:function(ele,type,handler){
+            if(ele.addEventListener)
+            {
+                ele.addEventListener(type,handler);
+            }else if(ele.attachEvent){
+                ele.attachEvent('on'+type,handler);
+            }else{
+                ele['on'+type]=handler;
+            }
+        },
+        //移除事件
+        removeEvent:function(ele,type,handler)
+        {
+            if(ele.removeEventListener){
+                ele.removeEventListener(type,handler,false);
+            }else if(ele.detachEvent){
+                ele.detachEvent('on'+type,handler);
+            }else{
+                ele['on'+type]=null;
+            }
+        },
+        //获取事件目标 事件的目标节点
+        getTarget:function(event){
+            return event.target||event.srcElement;
+        },
+        //获取event对象的引用，取到事件的所有信息，确保随时能使用event
+        getEvent:function(event){
+            return event||window.event;  
+        },
+        // 阻止事件(主要是事件冒泡，因为IE不支持事件捕获)
+        stopPropagation:function(event){
+            if(event.stopPropagation){
+                event.stopPropagation();
+            }else{
+                event.cancelBubble=true;
+            }
+        },
+        //取消事件的默认行为
+        preventDefault:function(event){
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue=false;
+            }
+        }
+    }
+    </script>
+</body>
+</html>

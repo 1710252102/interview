@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      .Article {
+        display: flex;
+      }
+      .Article li {
+        list-style: none; /*取消小点*/
+        flex: 1;
+        color: white;
+        width: 200px;
+        background-color: red;
+      }
+      .Article li p {
+        padding: 10px;
+      }
+      .one {
+        width: 100px;
+        background-color: red;
+      }
+      .two {
+        width: auto;
+        background-color: saddlebrown;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // var obj = {
+      //   val: 2,
+      //   dbl: function () {
+      //     console.log(this.val + "!");
+      //     this.val *= 2;
+      //     val *= 2;
+      //     console.log(val);
+      //     console.log(this.val);
+      //   },
+      // };
+      // // 说出下面的输出结果
+      // obj.dbl(); //2 4
+      // var func = obj.dbl;
+      // func(); //8 8
+      function fun1() {
+        console.log(val);
+        var val = 20;
+        console.log(val);
+      }
+
+      var val = 12;
+      fun1();
+    </script>
+  </body>
+</html>

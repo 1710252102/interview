@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        html,body{
+            width: 100%;
+        }
+        select{
+            height: 50px;
+            width: 30%;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <select name="" id="provinces">
+        <option value="-1">请选择省级</option>
+    </select>
+
+    <select name="" id="cities">
+        <option value="-1">请选择县级</option>
+    </select>
+
+    <select name="" id="areas">
+        <option value="-1">请选择区级</option>
+    </select>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/template-web.js"></script>
+    <script type="text/html" id="provinceTpl">
+        <option value="-1">请选择省级</option>
+        {{each provinces}}
+        <option value="{{$index}}">{{$value.lable}}</option>
+        {{/each}}
+    </script>
+    <script type="text/html" id="citiesTpl">
+        <option value="-1">请选择县级</option>
+        {{each cities}}
+            <option value="{{$index}}">{{$value.lable}}</option>
+        {{/each}}
+    </script>
+    <script type="text/html" id="areasTpl">
+        <option value="-1">请选择区级</option>
+        {{each areas}}
+            <option value="{{$index}}">{{$value.lable}}</option>
+        {{/each}}
+    </script>
+    <script type="text/javascript">
+        var cities=$('#cities'),
+            provinces=$('#provinces'),
+            areas=$('#areas'),
+            provinceId=-1,citiesId=-1,
+            ary;
+
+        $.ajax({
+            type:'get',
+            url:'/base',
+            success:function(data){
+                var html=template('provinceTpl',{provinces:data});
+                provinces.html(html);
+                ary=data;
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+
+        provinces.on('change',function(){
+            // console.log(ary[this.value].children);
+            if(this.value==-1)
+            {
+                alert('请选择市级');
+                return ;
+            }
+            provinceId=this.value;
+            var html=template('citiesTpl',{ cities: ary[provinceId].children});
+            cities.html(html);
+            html =template('areasTpl',{});
+            areas.html(html);
+        })
+
+        cities.on('change',function(){
+            if(this.value==-1)
+            {
+                alert('请选择区级');
+                return ;
+            }
+            citiesId=this.value;
+            // console.log(ary[provinceId].children[citiesId].children);
+            var html =template('areasTpl',{areas:ary[provinceId].children[citiesId].children});
+            areas.html(html);
+        })
+    </script>
+</body>
+
+</html>

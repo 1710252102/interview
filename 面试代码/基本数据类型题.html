@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+    // 输出下面代码运行结果
+    var a={},b='123',c=123;
+    a[b]='b';
+    a[c]='c';
+    console.log(a[c]); // c 因为a['123']=a[123];
+
+    var a={},b=Symbol('123'),c=Symbol(123);
+    a[b]='b';
+    a[c]='c';
+    console.log(a[b]); // b symbol是ES6新增的数据类型 typeof Symbol('123') === 'symbol' 它创建处理的值是唯一值 Symbol('123')===Symbol('123') False
+
+    var a={},b={key:'123'},c={key:'456'};
+    a[b]='b',
+    a[c]='c';
+    console.log(a[b]); // c
+    // 1.对象的属性名不能是一个对象 (遇到对象属性名,会默认转换为字符串)
+    //   obj={} arr=[12,34] obj[arr]='珠峰' obj=>{"12,23":"珠峰"}
+    // 2.普通对象.toString 调取的是Objext.prototype上的方法
+    //  obj={} obj.tostring()=>"[object Object]"
+    //  obj[b]='b' =>obj["[object Object]"]='b';
+    </script>
+</body>
+</html>

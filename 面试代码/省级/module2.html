@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        html,body{
+            width: 100%;
+        }
+        select{
+            height: 50px;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+
+    <select name="" id="provinces">
+        <option value="-1">请选择省级</option>
+    </select>
+
+    <select name="" id="cities">
+        <option value="-1">请选择县级</option>
+    </select>
+
+    <select name="" id="areas">
+        <option value="-1">请选择区级</option>
+    </select>
+
+    <script type="text/javascript">
+        var provinces=document.querySelector('#provinces'),
+        cities=document.querySelector('#cities'),
+        areas=document.querySelector('#areas'),
+        provinceId=-1,citiesId=-1;
+
+        // ajax请求
+        var ary;
+        function ajax(options)
+        {
+            var xhr=new XMLHttpRequest();
+            xhr.open('get','/base',true);
+            xhr.send();
+            xhr.onload=function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                    options.success(JSON.parse(xhr.responseText));
+                }
+            }
+        }
+        ajax({
+            success:function(data){
+                ary=data;
+                ary.forEach((element,index) => {
+                    var vs=document.createElement('option');
+                    vs.value=index;
+                    vs.innerHTML=element.lable;
+                    provinces.appendChild(vs);
+                });
+            }
+        })
+
+        provinces.addEventListener('change',function(){
+            provinceId=this.value;
+            if(provinceId==-1){
+                alert('请选择市级');
+                return;
+            }
+            cities.innerHTML='<option value="-1">请选择县级</option>';
+            areas.innerHTML='<option value="-1">请选择区级</option>';
+            ary[provinceId].children.forEach((element,index) => {
+                    var vs=document.createElement('option');
+                    vs.value=index;
+                    vs.innerHTML=element.lable;
+                    cities.appendChild(vs);
+            });
+        })
+
+        cities.addEventListener('change',function(){
+            citiesId=this.value;
+            if(citiesId==-1){
+                alert('请选择区级');
+                return ;
+            }
+            areas.innerHTML='<option value="-1">请选择区级</option>';
+            ary[provinceId].children[citiesId].children.forEach((element,index) => {
+                    var vs=document.createElement('option');
+                    vs.value=index;
+                    vs.innerHTML=element.lable;
+                    areas.appendChild(vs);
+            });
+        })
+    </script>
+</body>
+</html>
